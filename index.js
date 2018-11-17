@@ -166,9 +166,7 @@ client.on("message", (msg) => {
     }
     if (msg.content.toLowerCase().includes("despacito")) {
       var randomNumber = Math.floor(Math.random() * despacito.length);
-      return msg.channel.send(
-        "Line " + randomNumber + ": " + despacito[randomNumber]
-      );
+      return msg.channel.send(despacito[randomNumber]);
     }
     msg.channel.send("salt");
   }
