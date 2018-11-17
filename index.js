@@ -105,7 +105,7 @@ client.on("message", (msg) => {
     fs.writeFile("./config.json", JSON.stringify(config), function(err) {
       if (err) return console.log(err);
     });
-    msg.channel.send("Salt bot is now set to: " + enabled);
+    return msg.channel.send("Salt bot is now set to: " + enabled);
   }
   if (config.enabled) {
     if (msg.author.bot) return;
