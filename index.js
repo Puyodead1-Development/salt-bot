@@ -93,7 +93,7 @@ client.on("ready", () => {
 });
 
 client.on("message", (msg) => {
-  if (msg.content.toLowerCase() === "toggle salt") {
+  if (msg.content.toLowerCase() === "give me salt daddy") {
     if (config.enabled) {
       enabled = false;
       config.enabled = false;
