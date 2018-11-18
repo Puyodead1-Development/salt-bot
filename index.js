@@ -90,6 +90,7 @@ let despacito = [
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setActivity("with SALT!", { type: "PLAYING" });
 });
 
 client.on("message", (msg) => {
