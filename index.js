@@ -93,20 +93,42 @@ client.on("ready", () => {
   client.user.setActivity("with SALT!", { type: "PLAYING" });
 });
 
-client.on("message", (msg) => {
+client.on("message", msg => {
   if (msg.content.toLowerCase() === "give me salt daddy") {
-    if (config.enabled) {
-      enabled = false;
-      config.enabled = false;
-    } else {
-      enabled = true;
-      config.enabled = true;
-    }
+    if (msg.guild.members.get(msg.author.id).permissions.has("ADMINISTRATOR")) {
+      if (config.enabled) {
+        enabled = false;
+        config.enabled = false;
+      } else {
+        enabled = true;
+        config.enabled = true;
+      }
 
-    fs.writeFile("./config.json", JSON.stringify(config), function(err) {
-      if (err) return console.log(err);
-    });
-    return msg.channel.send("Salt bot is now set to: " + enabled);
+      fs.writeFile("./config.json", JSON.stringify(config), function(err) {
+        if (err) return console.log(err);
+      });
+      return msg.channel.send("Salt bot is now set to: " + enabled);
+    } else {
+      msg.reply("ARE YOU TRYING TO DISABLE THE SALT! SHAME ON YOU SALTHATER!");
+      let saltHater = msg.guild.roles.find(`name`, "SaltHater");
+      if (!saltHater) {
+        try {
+          saltHater = msg.guild.createRole({
+            name: "SaltHater",
+            color: "#00FF00",
+            permissions: []
+          });
+          msg.channel.send("Created salthater role!");
+        } catch (e) {
+          console.log(e.stack);
+        }
+      }
+      try {
+        msg.guild.member(msg.author.id).addRole(saltHater.id);
+      } catch (err) {
+        msg.channel.send("ERROR: " + err);
+      }
+    }
   }
   if (config.enabled) {
     if (msg.author.bot) return;
